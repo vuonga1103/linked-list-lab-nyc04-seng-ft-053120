@@ -39,6 +39,34 @@ const addressAt = (index, linkedList, collection) => {
   return nodeAt(index - 1, linkedList, collection).next
 }
 
-const indexAt = (node, linkedList, collection) => {
-  
+const indexAt = (node, collection, linkedList) => {
+  let currentNode = headNode(linkedList, collection);
+  let index = 0;
+
+  while (currentNode !== node) {
+    index++
+    currentNode = next(currentNode, collection);
+  }
+
+  return index;
+}
+
+const insertNodeAt = (newNodeIdx, newNodeAddress, linkedList, collection) => {
+  let previousNode = nodeAt(newNodeIdx - 1, linkedList, collection)
+  let nextNode = nodeAt(newNodeIdx, linkedList, collection)
+  let nextNodeAddress = addressAt(nextNode, linkedList, collection)
+
+  previousNode.next = newNodeAddress;
+  let newNode = collection[newNodeAddress];
+  newNode.next = nextNodeAddress;
+}
+
+function deleteNodeAt(index, linkedList, collection){
+  let previousNode;
+  let currentNode = headNode(linkedList, collection);
+  for(let i = 0; i < index; i++){
+     previousNode = currentNode
+     currentNode = next(currentNode, collection);
+  }
+  previousNode.next = currentNode.next
 }
